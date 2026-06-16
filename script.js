@@ -1,49 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Password protection gate
-    const SITE_PASSWORD = 'Spryzen123';
-    const PASSWORD_KEY = 'spyrenzSiteUnlocked';
-    const isUnlocked = sessionStorage.getItem(PASSWORD_KEY) === 'true';
-
-    const createPasswordOverlay = () => {
-        const overlay = document.createElement('div');
-        overlay.className = 'password-overlay';
-        overlay.innerHTML = `
-            <div class="password-card">
-                <h2>Enter Access Code</h2>
-                <p>This site is protected. Please enter the password to continue.</p>
-                <form id="password-form">
-                    <input type="password" id="password-input" class="password-input" placeholder="Enter password" autocomplete="current-password" required>
-                    <button type="submit" class="password-button">Unlock Site</button>
-                    <div id="password-error" class="password-error"></div>
-                </form>
-            </div>
-        `;
-
-        const form = overlay.querySelector('#password-form');
-        const input = overlay.querySelector('#password-input');
-        const error = overlay.querySelector('#password-error');
-
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const value = input.value.trim();
-            if (value === SITE_PASSWORD) {
-                sessionStorage.setItem(PASSWORD_KEY, 'true');
-                overlay.remove();
-            } else {
-                error.textContent = 'Incorrect password. Please try again.';
-                input.value = '';
-                input.focus();
-            }
-        });
-
-        document.body.appendChild(overlay);
-        input.focus();
-    };
-
-    if (!isUnlocked) {
-        createPasswordOverlay();
-    }
-
     // 1. Custom Cursor Glow Tracking
     const cursorGlow = document.querySelector('.cursor-glow');
     if (cursorGlow) {
